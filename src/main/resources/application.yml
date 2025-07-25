@@ -4,6 +4,17 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  datasource:
+    url: jdbc:postgresql://localhost:5432/financesdb
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    org.hibernate.orm.connections.pooling: warn
 
 server:
   port: 0
