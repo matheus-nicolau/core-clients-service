@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "17f0c9c8-028f-4227-874b-2998b3ec9c02",
+		"name": "coreClient",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17161725"
+	},
+	"item": [
+		{
+			"name": "saveClients",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Bruno Raman\",\n    \"email\": \"brunoramn@outlook.com\",\n    \"cpf\": \"911.451.820-11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/clients/create",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"clients",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listOnClient",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/clients/nicolu@gmail.com",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"clients",
+						"nicolu@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listAllClients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/clients/list",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"clients",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeClient",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/clients/remove/nicolu@gmail.com",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"clients",
+						"remove",
+						"nicolu@gmail.com"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://127.0.0.1:8080",
+			"type": "string"
+		}
+	]
+}

@@ -1,26 +1,27 @@
 package github.matheus_nicolau.core_clients.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table(name = "clients")
 public class Clients {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private final String name;
-    private final String email;
-    private final Integer cpf;
-    private final ZonedDateTime createdAt;
+    private String name;
+    private String email;
+    private String cpf;
+    private ZonedDateTime createdAt;
 
-    public Clients( String name, String email, Integer cpf,  ZonedDateTime createdAt) {
+    @Deprecated
+    Clients() {}
+
+    public Clients(String name, String email, String cpf,  ZonedDateTime createdAt) {
         this.name = name;
         this.email = email;
         this.cpf = cpf;
@@ -39,7 +40,7 @@ public class Clients {
         return email;
     }
 
-    public Integer getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
