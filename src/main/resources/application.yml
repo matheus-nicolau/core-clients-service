@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: core-clients
@@ -10,14 +13,14 @@ spring:
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
+    properties:
+      hibernate:
+        default_schema: core_clients
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 logging:
   level:
     org.hibernate.orm.connections.pooling: warn
-
-server:
-  port: 0
 
 eureka:
   client:
