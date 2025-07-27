@@ -1,6 +1,6 @@
 # core-clients-service
 
-### This is an Microservice as a practical implementation of the microservices architecture. Other projects involved would be:
+This is an Microservice as a practical implementation of the microservices architecture. Other projects involved would be:
 
 
 - [Discovery-Service](https://github.com/matheus-nicolau/dicovery-service) <br>
