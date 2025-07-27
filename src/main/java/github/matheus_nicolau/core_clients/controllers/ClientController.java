@@ -34,7 +34,7 @@ public class ClientController {
     @PostMapping("create")
     public ResponseEntity<String> createClient(@Valid @RequestBody ClientsDTO client) {
         clientsService.createClients(client);
-        return new ResponseEntity<>("Cliente salvo com sucesso !", HttpStatus.OK);
+        return new ResponseEntity<>("Cliente salvo com sucesso !", HttpStatus.CREATED);
     }
 
     @DeleteMapping("remove/{email}")
