@@ -29,10 +29,6 @@ class ClientsServiceTest {
     ClientsDTO clientsDTO;
     @Mock
     ClientsRepository clientsRepository;
-    @Mock
-    ParseClientsDTOToClient clientsDTOToClient;
-    @Mock
-    ParseClientsToClientsDTO clientsToClientsDTO;
 
     @InjectMocks
     ClientsService clientsService;
