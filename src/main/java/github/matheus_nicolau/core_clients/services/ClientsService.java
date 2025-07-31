@@ -1,6 +1,7 @@
 package github.matheus_nicolau.core_clients.services;
 
 import github.matheus_nicolau.core_clients.dto.ClientsDTO;
+import github.matheus_nicolau.core_clients.dto.CreditDTO;
 import github.matheus_nicolau.core_clients.entity.Clients;
 import github.matheus_nicolau.core_clients.exceptions.ClientNotFindException;
 import github.matheus_nicolau.core_clients.exceptions.ExceptionMessages;
@@ -19,12 +20,14 @@ public class ClientsService {
     private final ClientsRepository clientsRepository;
     private final ParseClientsDTOToClient clientsDTOToClient;
     private final ParseClientsToClientsDTO clientsToClientsDTO;
+    private final ClientCredit clientCredit;
 
-    public ClientsService(ClientsRepository repository, ParseClientsDTOToClient parseClientDto,
-                          ParseClientsToClientsDTO parseClients) {
-        this.clientsRepository = repository;
-        this.clientsDTOToClient = parseClientDto;
-        this.clientsToClientsDTO = parseClients;
+    public ClientsService(ClientsRepository clientsRepository, ParseClientsDTOToClient clientsDTOToClient,
+                          ParseClientsToClientsDTO clientsToClientsDTO, ClientCredit clientCredit) {
+        this.clientsRepository = clientsRepository;
+        this.clientsDTOToClient = clientsDTOToClient;
+        this.clientsToClientsDTO = clientsToClientsDTO;
+        this.clientCredit = clientCredit;
     }
 
     public void createClients(ClientsDTO clientsDTO) {
@@ -51,5 +54,10 @@ public class ClientsService {
         Clients clientToDelete = clientsOptional.orElseThrow(() -> new ClientNotFindException(
                                                                         ExceptionMessages.CLIENT_NOT_FINDED.message()));
         clientsRepository.delete(clientToDelete);
+    }
+
+    public void testFeing(String limit) {
+        List<CreditDTO> body = clientCredit.listByLimit(limit).getBody();
+        System.out.println(body);
     }
 }
