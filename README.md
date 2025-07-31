@@ -5,5 +5,6 @@ This is an Microservice as a practical implementation of the microservices archi
 
 - [Discovery-Service](https://github.com/matheus-nicolau/dicovery-service) <br>
 - [Finances-Gateway](https://github.com/matheus-nicolau/finances-gateway) <br>
+- [Credit-Card-Service](https://github.com/matheus-nicolau/credit-card-service) <br>
 ---
 ![diagram image](./src/main/resources/finances-diagram.png)

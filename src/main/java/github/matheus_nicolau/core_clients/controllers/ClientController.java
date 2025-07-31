@@ -31,6 +31,12 @@ public class ClientController {
         return new ResponseEntity<>(listOfClients, HttpStatus.OK);
     }
 
+    @GetMapping("list/credit/{limit}")
+    public ResponseEntity<String> listCredit(@PathVariable String limit) {
+        clientsService.testFeing(limit);
+        return new ResponseEntity<>("Teste feing", HttpStatus.OK);
+    }
+
     @PostMapping("create")
     public ResponseEntity<String> createClient(@Valid @RequestBody ClientsDTO client) {
         clientsService.createClients(client);
