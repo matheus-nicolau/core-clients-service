@@ -26,4 +26,12 @@ public class ExceptionController {
 
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception);
     }
+
+    @ExceptionHandler(CreditSolicitationException.class)
+    public ResponseEntity<ExceptionModel> clientNotFindException(CreditSolicitationException clientException) {
+        ExceptionModel exception = new ExceptionModel(clientException.getClass().getSimpleName(),
+                clientException.getMessage(), ZonedDateTime.now(ZoneId.of("UTC")));
+
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception);
+    }
 }

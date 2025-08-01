@@ -1,5 +1,7 @@
 package github.matheus_nicolau.core_clients.queue;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.Gson;
 import github.matheus_nicolau.core_clients.dto.CreditDTO;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -16,9 +18,14 @@ public class CreditEmissionProducer {
         this.queueEmission = queueEmission;
     }
 
-    public void send(CreditDTO credit) {
+    public void send(CreditDTO credit) throws Exception {
+        String json = toJson(credit);
+        rabbitTemplate.convertAndSend(queueEmission.getName(), json);
+    }
 
-        System.out.println("Sending message: ");
+    private String toJson(CreditDTO credit) {
+        Gson gson = new Gson();
+        return gson.toJson(credit);
     }
 
 }

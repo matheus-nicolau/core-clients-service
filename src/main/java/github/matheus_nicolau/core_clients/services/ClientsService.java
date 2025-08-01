@@ -2,19 +2,20 @@ package github.matheus_nicolau.core_clients.services;
 
 import github.matheus_nicolau.core_clients.dto.ClientsDTO;
 import github.matheus_nicolau.core_clients.dto.CreditDTO;
+import github.matheus_nicolau.core_clients.dto.CreditProtocolDTO;
 import github.matheus_nicolau.core_clients.dto.FinancesDTO;
 import github.matheus_nicolau.core_clients.entity.Clients;
 import github.matheus_nicolau.core_clients.exceptions.ClientNotFindException;
+import github.matheus_nicolau.core_clients.exceptions.CreditSolicitationException;
 import github.matheus_nicolau.core_clients.exceptions.ExceptionMessages;
 import github.matheus_nicolau.core_clients.exceptions.SaveClientException;
 import github.matheus_nicolau.core_clients.parse.ParseClientsDTOToClient;
 import github.matheus_nicolau.core_clients.parse.ParseClientsToClientsDTO;
+import github.matheus_nicolau.core_clients.queue.CreditEmissionProducer;
 import github.matheus_nicolau.core_clients.repository.ClientsRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ClientsService {
@@ -23,13 +24,16 @@ public class ClientsService {
     private final ClientsRepository clientsRepository;
     private final ParseClientsDTOToClient clientsDTOToClient;
     private final ParseClientsToClientsDTO clientsToClientsDTO;
+    private final CreditEmissionProducer creditProducer;
 
-    public ClientsService(ClientsRepository clientsRepository, ParseClientsDTOToClient clientsDTOToClient,
-                          ParseClientsToClientsDTO clientsToClientsDTO, ClientCredit clientCredit) {
+    public ClientsService(ClientCredit clientCredit, ClientsRepository clientsRepository,
+                          ParseClientsDTOToClient clientsDTOToClient, ParseClientsToClientsDTO clientsToClientsDTO,
+                          CreditEmissionProducer creditProducer) {
+        this.clientCredit = clientCredit;
         this.clientsRepository = clientsRepository;
         this.clientsDTOToClient = clientsDTOToClient;
         this.clientsToClientsDTO = clientsToClientsDTO;
-        this.clientCredit = clientCredit;
+        this.creditProducer = creditProducer;
     }
 
     public void createClients(ClientsDTO clientsDTO) {
@@ -67,5 +71,14 @@ public class ClientsService {
         List<ClientsDTO> clientsList = clientsToClientsDTO.parseAll(findedList);
 
         return new FinancesDTO(clientsList, creditList);
+    }
+
+    public CreditProtocolDTO createCredit(CreditDTO credit) throws CreditSolicitationException {
+        try {
+            creditProducer.send(credit);
+            return new CreditProtocolDTO(UUID.randomUUID().toString());
+        } catch (Exception e) {
+            throw new CreditSolicitationException(ExceptionMessages.CREDIT_SOLICITATION_NOT_FOUND.message());
+        }
     }
 }
