@@ -1,6 +1,8 @@
 package github.matheus_nicolau.core_clients.controllers;
 
 import github.matheus_nicolau.core_clients.dto.ClientsDTO;
+import github.matheus_nicolau.core_clients.dto.CreditDTO;
+import github.matheus_nicolau.core_clients.dto.CreditProtocolDTO;
 import github.matheus_nicolau.core_clients.dto.FinancesDTO;
 import github.matheus_nicolau.core_clients.services.ClientsService;
 import jakarta.validation.Valid;
@@ -36,6 +38,12 @@ public class ClientController {
     public ResponseEntity<FinancesDTO> listCredit(@PathVariable String limit) {
         FinancesDTO financesDTO = clientsService.testFeing(limit);
         return new ResponseEntity<>(financesDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("credit/send")
+    public ResponseEntity<CreditProtocolDTO> createCredit(@Valid @RequestBody CreditDTO credit) {
+        CreditProtocolDTO protocol = clientsService.createCredit(credit);
+        return new ResponseEntity<>(protocol, HttpStatus.CREATED);
     }
 
     @PostMapping("create")
