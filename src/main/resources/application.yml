@@ -7,6 +7,11 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  rabbitmq:
+    host: ${HOST_RABBITMQ}
+    port: ${PORT_RABBITMQ}
+    username: ${USER_RABBITMQ}
+    password: ${PASSWORD_RABBITMQ}
   datasource:
     url: jdbc:postgresql://localhost:5432/financesdb
     username: ${POSTGRES_USER}
@@ -28,3 +33,7 @@ eureka:
       defaultZone: http://${DISCOVERY_URL}/eureka
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+mq:
+  queues:
+    credit-emission: credit-emission

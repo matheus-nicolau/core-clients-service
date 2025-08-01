@@ -2,6 +2,7 @@ package github.matheus_nicolau.core_clients.services;
 
 import github.matheus_nicolau.core_clients.dto.ClientsDTO;
 import github.matheus_nicolau.core_clients.dto.CreditDTO;
+import github.matheus_nicolau.core_clients.dto.FinancesDTO;
 import github.matheus_nicolau.core_clients.entity.Clients;
 import github.matheus_nicolau.core_clients.exceptions.ClientNotFindException;
 import github.matheus_nicolau.core_clients.exceptions.ExceptionMessages;
@@ -11,16 +12,17 @@ import github.matheus_nicolau.core_clients.parse.ParseClientsToClientsDTO;
 import github.matheus_nicolau.core_clients.repository.ClientsRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ClientsService {
 
+    private final ClientCredit clientCredit;
     private final ClientsRepository clientsRepository;
     private final ParseClientsDTOToClient clientsDTOToClient;
     private final ParseClientsToClientsDTO clientsToClientsDTO;
-    private final ClientCredit clientCredit;
 
     public ClientsService(ClientsRepository clientsRepository, ParseClientsDTOToClient clientsDTOToClient,
                           ParseClientsToClientsDTO clientsToClientsDTO, ClientCredit clientCredit) {
@@ -56,8 +58,14 @@ public class ClientsService {
         clientsRepository.delete(clientToDelete);
     }
 
-    public void testFeing(String limit) {
-        List<CreditDTO> body = clientCredit.listByLimit(limit).getBody();
-        System.out.println(body);
+    public FinancesDTO testFeing(String limit) {
+        List<CreditDTO> creditList = clientCredit.listByLimit(limit).getBody();
+        List<String> names = new ArrayList<>();
+        if (null != creditList) names = creditList.stream().map(CreditDTO::name).toList();
+        List<Clients> findedList = clientsRepository.findAllByName(names).orElseThrow(() -> new ClientNotFindException(
+                                                                        ExceptionMessages.CLIENT_NOT_FINDED.message()));
+        List<ClientsDTO> clientsList = clientsToClientsDTO.parseAll(findedList);
+
+        return new FinancesDTO(clientsList, creditList);
     }
 }
