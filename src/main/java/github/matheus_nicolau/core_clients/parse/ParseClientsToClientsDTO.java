@@ -12,7 +12,7 @@ public class ParseClientsToClientsDTO {
     }
 
     public List<ClientsDTO> parseAll(List<Clients> listOfClients) {
-        return listOfClients.stream().map(client -> new ClientsDTO(client.getName(),
-                                              client.getEmail(), client.getCpf())).toList();
+        return listOfClients.stream().map(client -> new ClientsDTO(client.getName(), client.getEmail(),
+                                                                           client.getCpf())).toList();
     }
 }

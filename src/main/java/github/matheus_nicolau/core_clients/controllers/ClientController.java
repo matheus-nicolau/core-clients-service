@@ -1,6 +1,7 @@
 package github.matheus_nicolau.core_clients.controllers;
 
 import github.matheus_nicolau.core_clients.dto.ClientsDTO;
+import github.matheus_nicolau.core_clients.dto.FinancesDTO;
 import github.matheus_nicolau.core_clients.services.ClientsService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -32,9 +33,9 @@ public class ClientController {
     }
 
     @GetMapping("list/credit/{limit}")
-    public ResponseEntity<String> listCredit(@PathVariable String limit) {
-        clientsService.testFeing(limit);
-        return new ResponseEntity<>("Teste feing", HttpStatus.OK);
+    public ResponseEntity<FinancesDTO> listCredit(@PathVariable String limit) {
+        FinancesDTO financesDTO = clientsService.testFeing(limit);
+        return new ResponseEntity<>(financesDTO, HttpStatus.OK);
     }
 
     @PostMapping("create")
